@@ -84,6 +84,7 @@ flutter:
     - config/
     - assets/img/
     - assets/icon/
+    - assets/locales/
     
   fonts:
     - family: Poppins Light

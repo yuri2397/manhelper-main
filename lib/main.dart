@@ -20,10 +20,7 @@ void initServices() async {
   await Get.putAsync(() => TranslationService().init());
   await Get.putAsync(() => GlobalService().init());
   await Firebase.initializeApp();
-  WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize(
-      debug: true // optional: set false to disable printing logs to console
-      );
+  await FlutterDownloader.initialize(debug: true);
   await Get.putAsync(() => AuthService().init());
   await Get.putAsync(() => LaravelApiClient().init());
   await Get.putAsync(() => FirebaseProvider().init());

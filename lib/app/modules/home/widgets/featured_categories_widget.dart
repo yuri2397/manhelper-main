@@ -22,14 +22,17 @@ class FeaturedCategoriesWidget extends GetWidget<HomeController> {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: Row(
                   children: [
-                    Expanded(child: Text(_category.name, style: Get.textTheme.headline5)),
+                    Expanded(
+                        child: Text(_category.name,
+                            style: Get.textTheme.headline5)),
                     MaterialButton(
                       onPressed: () {
                         Get.toNamed(Routes.CATEGORY, arguments: _category);
                       },
                       shape: StadiumBorder(),
                       color: Get.theme.colorScheme.secondary.withOpacity(0.1),
-                      child: Text("View All".tr, style: Get.textTheme.subtitle1),
+                      child:
+                          Text("View All".tr, style: Get.textTheme.subtitle1),
                       elevation: 0,
                     ),
                   ],
@@ -37,9 +40,14 @@ class FeaturedCategoriesWidget extends GetWidget<HomeController> {
               ),
               Obx(() {
                 if (controller.featured.elementAt(index).eServices.isEmpty) {
-                  return Text('loading...');
+                  if (controller.isLoadFeatured == true) {
+                    return Text('loading...');
+                  } else {
+                    return Text("No available feature in your area.");
+                  }
                 }
-                return ServicesCarouselWidget(services: controller.featured.elementAt(index).eServices);
+                return ServicesCarouselWidget(
+                    services: controller.featured.elementAt(index).eServices);
               }),
             ],
           );

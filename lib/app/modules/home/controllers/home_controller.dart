@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   final eServices = <EService>[].obs;
   final categories = <Category>[].obs;
   final featured = <Category>[].obs;
-
+  final isLoadFeatured = true.obs;
   HomeController() {
     _sliderRepo = new SliderRepository();
     _categoryRepository = new CategoryRepository();
@@ -43,7 +43,8 @@ class HomeController extends GetxController {
     await getRecommendedEServices();
     Get.find<RootController>().getNotificationsCount();
     if (showMessage) {
-      Get.showSnackbar(Ui.SuccessSnackBar(message: "Home page refreshed successfully".tr));
+      Get.showSnackbar(
+          Ui.SuccessSnackBar(message: "Home page refreshed successfully".tr));
     }
   }
 
@@ -69,9 +70,12 @@ class HomeController extends GetxController {
 
   Future getFeatured() async {
     try {
+      isLoadFeatured.value = true;
       featured.assignAll(await _categoryRepository.getFeatured());
+      isLoadFeatured.value = false;
     } catch (e) {
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
+      isLoadFeatured.value = false;
     }
   }
 

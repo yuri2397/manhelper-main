@@ -1,7 +1,7 @@
 import 'package:get/get.dart' show GetPage, Transition;
-import 'package:home_services/app/modules/post_request/bindings/post_request_binding.dart';
-import 'package:home_services/app/modules/post_request/views/post_request_view.dart';
-import 'package:home_services/app/modules/post_request/views/post_requests_view.dart';
+import '../modules/post_request/bindings/post_request_binding.dart';
+import '../modules/post_request/views/post_request_view.dart';
+import '../modules/post_request/views/post_requests_view.dart';
 
 import '../middlewares/auth_middleware.dart';
 import '../modules/auth/bindings/auth_binding.dart';

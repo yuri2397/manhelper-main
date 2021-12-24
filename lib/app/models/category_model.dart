@@ -14,7 +14,15 @@ class Category extends Model {
   List<Category> subCategories;
   List<EService> eServices;
 
-  Category({this.id, this.name, this.description, this.color, this.image, this.featured, this.subCategories, this.eServices});
+  Category(
+      {this.id,
+      this.name,
+      this.description,
+      this.color,
+      this.image,
+      this.featured,
+      this.subCategories,
+      this.eServices});
 
   Category.fromJson(Map<String, dynamic> json) {
     super.fromJson(json);
@@ -23,8 +31,10 @@ class Category extends Model {
     description = transStringFromJson(json, 'description');
     image = mediaFromJson(json, 'image');
     featured = boolFromJson(json, 'featured');
-    eServices = listFromJsonArray(json, ['e_services', 'featured_e_services'], (v) => EService.fromJson(v));
-    subCategories = listFromJson(json, 'sub_categories', (v) => Category.fromJson(v));
+    eServices = listFromJsonArray(json, ['e_services', 'featured_e_services'],
+        (v) => EService.fromJson(v));
+    subCategories =
+        listFromJson(json, 'sub_categories', (v) => Category.fromJson(v));
   }
 
   Map<String, dynamic> toJson() {
@@ -53,5 +63,13 @@ class Category extends Model {
 
   @override
   int get hashCode =>
-      super.hashCode ^ id.hashCode ^ name.hashCode ^ description.hashCode ^ color.hashCode ^ image.hashCode ^ featured.hashCode ^ subCategories.hashCode ^ eServices.hashCode;
+      super.hashCode ^
+      id.hashCode ^
+      name.hashCode ^
+      description.hashCode ^
+      color.hashCode ^
+      image.hashCode ^
+      featured.hashCode ^
+      subCategories.hashCode ^
+      eServices.hashCode;
 }

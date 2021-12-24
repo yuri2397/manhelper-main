@@ -14,6 +14,7 @@ class RecommendedCarouselWidget extends GetWidget<HomeController> {
       height: 345,
       color: Get.theme.primaryColor,
       child: Obx(() {
+        Get.log("SERVICES : " + controller.eServices.toString());
         return ListView.builder(
             padding: EdgeInsets.only(bottom: 10),
             primary: false,
@@ -24,16 +25,23 @@ class RecommendedCarouselWidget extends GetWidget<HomeController> {
               var _service = controller.eServices.elementAt(index);
               return GestureDetector(
                 onTap: () {
-                  Get.toNamed(Routes.E_SERVICE, arguments: {'eService': _service, 'heroTag': 'recommended_carousel'});
+                  Get.toNamed(Routes.E_SERVICE, arguments: {
+                    'eService': _service,
+                    'heroTag': 'recommended_carousel'
+                  });
                 },
                 child: Container(
                   width: 180,
-                  margin: EdgeInsetsDirectional.only(end: 20, start: index == 0 ? 20 : 0, top: 20, bottom: 10),
+                  margin: EdgeInsetsDirectional.only(
+                      end: 20, start: index == 0 ? 20 : 0, top: 20, bottom: 10),
                   // padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     boxShadow: [
-                      BoxShadow(color: Get.theme.focusColor.withOpacity(0.1), blurRadius: 10, offset: Offset(0, 5)),
+                      BoxShadow(
+                          color: Get.theme.focusColor.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: Offset(0, 5)),
                     ],
                   ),
                   child: Column(
@@ -42,7 +50,9 @@ class RecommendedCarouselWidget extends GetWidget<HomeController> {
                       Hero(
                         tag: 'recommended_carousel' + _service.id,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
                           child: CachedNetworkImage(
                             height: 180,
                             width: double.infinity,
@@ -54,17 +64,21 @@ class RecommendedCarouselWidget extends GetWidget<HomeController> {
                               width: double.infinity,
                               height: 100,
                             ),
-                            errorWidget: (context, url, error) => Icon(Icons.error_outline),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error_outline),
                           ),
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 10),
                         height: 115,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Get.theme.primaryColor,
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,7 +87,8 @@ class RecommendedCarouselWidget extends GetWidget<HomeController> {
                             Text(
                               _service.name ?? '',
                               maxLines: 2,
-                              style: Get.textTheme.bodyText2.merge(TextStyle(color: Get.theme.hintColor)),
+                              style: Get.textTheme.bodyText2
+                                  .merge(TextStyle(color: Get.theme.hintColor)),
                             ),
                             Wrap(
                               children: Ui.getStarsList(_service.rate),
@@ -90,7 +105,10 @@ class RecommendedCarouselWidget extends GetWidget<HomeController> {
                                 ),
                                 Ui.getPrice(
                                   _service.price,
-                                  style: Get.textTheme.bodyText2.merge(TextStyle(color: Get.theme.colorScheme.secondary)),
+                                  style: Get.textTheme.bodyText2.merge(
+                                      TextStyle(
+                                          color:
+                                              Get.theme.colorScheme.secondary)),
                                   unit: _service.getUnit,
                                 ),
                               ],

@@ -5,9 +5,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../models/category_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../repositories/category_repository.dart';
 import '../../../repositories/post_request_repository.dart';
 import 'package:image_picker/image_picker.dart';
@@ -53,9 +53,6 @@ class MessagesController extends GetxController {
 
   @override
   void onInit() async {
-    // await createMessage(new Message([_authService.user.value], id: UniqueKey().toString(), name: 'Appliance Repair Company'));
-    // await createMessage(new Message([_authService.user.value], id: UniqueKey().toString(), name: 'Shifting Home'));
-    // await createMessage(new Message([_authService.user.value], id: UniqueKey().toString(), name: 'Pet Car Company'));
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&

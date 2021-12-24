@@ -27,12 +27,12 @@ class PostRequest extends Model {
 
   String description;
   DateTime delivredAt;
-  int categoryId;
-  int userId;
+  String categoryId;
+  String userId;
   DateTime createdAt;
   DateTime updatedAt;
-  int budget;
-  List<String> files;
+  String budget;
+  List<dynamic> files;
   dynamic to;
   Category category;
 

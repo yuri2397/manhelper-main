@@ -171,122 +171,103 @@ class _ChatMessageItemState extends State<ChatMessageItem> {
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text("You Sent an Offer",
-                          style: Get.textTheme.bodyText1
-                              .merge(TextStyle(fontWeight: FontWeight.w600))),
-                      new Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: InkWell(
-                          onTap: () {
-                            // Get.toNamed(Routes.GALLERY, arguments: {
-                            //   'media': [
-                            //     new Media(
-                            //         id: this.chat.text,
-                            //         url: this.chat.customMedia)
-                            //   ],
-                            //   'current': new Media(
-                            //       id: this.chat.text,
-                            //       url: this.chat.customMedia),
-                            //   'heroTag': 'chat_image'
-                            // });
-                          },
-                          child: Container(
-                              child: Column(
-                            children: [
-                              Wrap(
-                                children: this
-                                    .widget
-                                    .chat
-                                    .customMedia
-                                    .map(
-                                      (e) => InkWell(
-                                        onTap: () async {
-                                          await controller3.downloadFiles(e);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Image.asset(
-                                            'assets/img/offerFile.png',
-                                            height: 50,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                              Text(
-                                  this
-                                          .widget
-                                          .chat
-                                          .customMedia
-                                          .length
-                                          .toString() +
-                                      " Files attached click to download",
-                                  style: Get.textTheme.bodyText1),
-                            ],
-                          )),
-                          // child: ClipRRect(
-                          //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                          //   child: CachedNetworkImage(
-                          //     width: double.infinity,
-                          //     fit: BoxFit.cover,
-                          //     height: 200,
-                          //     imageUrl: this.chat.customMedia,
-                          //     placeholder: (context, url) => Image.asset(
-                          //       'assets/img/loading.gif',
-                          //       fit: BoxFit.cover,
-                          //       width: double.infinity,
-                          //     ),
-                          //     errorWidget: (context, url, error) =>
-                          //         Icon(Icons.link_outlined),
-                          //   ),
-                          // ),
-                        ),
+                      Text("You Sent an Offer",
+                          style: Get.textTheme.bodyText1.merge(TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Poppins Medium"))),
+                      SizedBox(
+                        height: 10,
                       ),
-                      new Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: Row(
-                          children: [
-                            new Text("Description:",
-                                style: Get.textTheme.bodyText1.merge(
-                                    TextStyle(fontWeight: FontWeight.w600))),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            new Text(widget.chat.customDescription ?? "",
-                                style: Get.textTheme.bodyText1),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          Icon(Icons.paid_outlined, color: Get.theme.hintColor),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("${widget.chat.customPrice}  \$",
+                              style: Get.textTheme.bodyText1),
+                        ],
                       ),
-                      new Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: Row(
-                          children: [
-                            new Text("Price:",
-                                style: Get.textTheme.bodyText1.merge(
-                                    TextStyle(fontWeight: FontWeight.w600))),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            new Text(widget.chat.customPrice ?? "",
-                                style: Get.textTheme.bodyText1),
-                          ],
-                        ),
+                      SizedBox(
+                        height: 10,
                       ),
-                      new Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: Row(
-                          children: [
-                            new Text("Days:",
-                                style: Get.textTheme.bodyText1.merge(
-                                    TextStyle(fontWeight: FontWeight.w600))),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            new Text(widget.chat.customDate ?? "",
-                                style: Get.textTheme.bodyText1),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          Icon(Icons.av_timer, color: Get.theme.hintColor),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(widget.chat.customDate + " Days",
+                              style: Get.textTheme.bodyText1),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Description",
+                        style: TextStyle(
+                            fontFamily: "Poppins Bold",
+                            color: Colors.grey[350]),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                            _subDescription(widget.chat.customDescription),
+                            textAlign: TextAlign.start,
+                            style: TextStyle()),
+                      ),
+                      Divider(
+                        color: Get.theme.hintColor,
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.attach_file_outlined,
+                              color: Get.theme.hintColor),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            this.widget.chat.customMedia.length.toString() +
+                                " files attached",
+                            style: TextStyle(
+                                fontFamily: "Poppins Bold",
+                                color: Colors.grey[350]),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Wrap(
+                            children: this
+                                .widget
+                                .chat
+                                .customMedia
+                                .map(
+                                  (e) => InkWell(
+                                    onTap: () async {
+                                      Get.log(e.toString());
+                                      await controller3.downloadFiles(e);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: CircleAvatar(
+                                          backgroundColor: Get.theme.hintColor,
+                                          radius: 30,
+                                          child: Icon(Icons.download,
+                                              size: 20, color: Colors.white)),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -609,5 +590,12 @@ class _ChatMessageItemState extends State<ChatMessageItem> {
         ],
       ),
     );
+  }
+
+  String _subDescription(description) {
+    if (description.length > 350) {
+      return description.substring(0, 350) + "...";
+    }
+    return description;
   }
 }

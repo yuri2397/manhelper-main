@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:home_services/app/modules/post_request/widgets/thumbFile.dart';
 import 'package:intl/intl.dart';
 import '../../../models/post_request_model.dart';
 import '../../../../common/ui.dart';
@@ -53,9 +52,8 @@ class PostRequestListItem extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text("Delivry date " +
-                        DateFormat("yyyy-MM-dd")
-                            .format(postRequest.delivredAt)),
+                    Text("Delivry | " +
+                        DateFormat("d, MMMM y").format(postRequest.delivredAt)),
                   ],
                 ),
                 SizedBox(

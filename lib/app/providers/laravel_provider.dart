@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:path/path.dart' as PATH;
 
 import 'package:dio/dio.dart' as dio;
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:get/get.dart';
-import '../models/option_model.dart';
 import '../models/post_request_model.dart';
 
 import '../../common/uuid.dart';
@@ -211,16 +209,15 @@ class LaravelApiClient extends GetxService with ApiClient {
 
   Future<List<EService>> getRecommendedEServices() async {
     final _address = Get.find<SettingsService>().address.value;
-    // TODO get Only Recommended
     var _queryParameters = {
       'only':
           'id;name;price;discount_price;price_unit;has_media;media;total_reviews;rate',
-      'limit': '6',
+      'limit': '5',
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("e_services").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -244,10 +241,10 @@ class LaravelApiClient extends GetxService with ApiClient {
       'limit': '4',
       'offset': ((page - 1) * 4).toString()
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("e_services").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -264,7 +261,7 @@ class LaravelApiClient extends GetxService with ApiClient {
   Future<List<EService>> searchEServices(
       String keywords, List<String> categories, int page) async {
     final _address = Get.find<SettingsService>().address.value;
-    // TODO Pagination
+
     var _queryParameters = {
       'with': 'eProvider;eProvider.addresses;categories',
       'search': 'categories.id:${categories.join(',')};name:$keywords',
@@ -670,10 +667,10 @@ class LaravelApiClient extends GetxService with ApiClient {
       'limit': '4',
       'offset': ((page - 1) * 4).toString()
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("e_services").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -699,10 +696,10 @@ class LaravelApiClient extends GetxService with ApiClient {
       'limit': '4',
       'offset': ((page - 1) * 4).toString()
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("e_services").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -728,10 +725,10 @@ class LaravelApiClient extends GetxService with ApiClient {
       'limit': '4',
       'offset': ((page - 1) * 4).toString()
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("e_services").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -756,10 +753,10 @@ class LaravelApiClient extends GetxService with ApiClient {
       'limit': '4',
       'offset': ((page - 1) * 4).toString()
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("e_services").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -859,11 +856,12 @@ class LaravelApiClient extends GetxService with ApiClient {
       'searchFields': 'featured:=',
       'orderBy': 'order',
       'sortedBy': 'asc',
+      'limit': '4'
     };
-    if (!_address.isUnknown()) {
+    /*if (!_address.isUnknown()) {
       _queryParameters['myLat'] = _address.latitude.toString();
       _queryParameters['myLon'] = _address.longitude.toString();
-    }
+    }*/
     Uri _uri =
         getApiBaseUri("categories").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
@@ -963,14 +961,17 @@ class LaravelApiClient extends GetxService with ApiClient {
           "You don't have the permission to access to this area!".tr +
               "[ updateBooking() ]");
     }
+    Get.log("BOOKING ID: " + booking.id);
     var _queryParameters = {
       'api_token': authService.apiToken,
     };
     Uri _uri = getApiBaseUri("bookings/${booking.id}")
         .replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
+    Get.log("Update Book");
     var response = await _httpClient.putUri(_uri,
         data: booking.toJson(), options: _optionsNetwork);
+    Get.log(response.data);
     if (response.data['success'] == true) {
       return Booking.fromJson(response.data['data']);
     } else {
@@ -979,6 +980,7 @@ class LaravelApiClient extends GetxService with ApiClient {
   }
 
   Future<Booking> addBooking(Booking booking) async {
+    Get.log("ADD Book");
     if (!authService.isAuth) {
       throw new Exception(
           "You don't have the permission to access to this area!".tr +
@@ -990,6 +992,7 @@ class LaravelApiClient extends GetxService with ApiClient {
     Uri _uri =
         getApiBaseUri("bookings").replace(queryParameters: _queryParameters);
     Get.log(_uri.toString());
+
     var response = await _httpClient.postUri(_uri,
         data: booking.toJson(), options: _optionsNetwork);
     if (response.data['success'] == true) {
